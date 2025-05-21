@@ -3,266 +3,506 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unicode Letter Lookalike Generator</title>
+    <title>✨ Ultra Luxe Unicode Styler ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #4a6fa5;
-            --secondary: #166088;
-            --background: #f8f9fa;
-            --text: #333;
-            --card-bg: #fff;
-            --highlight: #ffd166;
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ff4e50;
+            --text-light: #f8f9fa;
+            --text-dark: #212529;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --glass: rgba(255, 255, 255, 0.15);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--text);
-            background-color: var(--background);
-            margin: 0;
-            padding: 0;
-        }
-        
-        header {
-            background-color: var(--primary);
-            color: white;
-            padding: 2rem 1rem;
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        h1 {
-            margin: 0;
-            font-size: 2.2rem;
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.8;
+            color: var(--text-light);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            min-height: 100vh;
+            overflow-x: hidden;
+            padding: 2rem;
+            background-attachment: fixed;
         }
         
         .container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
         }
         
-        .card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            padding: 1.5rem;
-            margin-bottom: 2rem;
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 10;
+        }
+        
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff 20%, #ff4e50 40%, #ff4e50 60%, #fff 80%);
+            background-size: 200% auto;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            animation: shine 3s linear infinite;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .main-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            padding: 3rem;
+            margin-bottom: 3rem;
+            transition: var(--transition);
+            border: 1px solid var(--glass);
+        }
+        
+        .main-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent), var(--secondary));
+            border-radius: 3px;
         }
         
         textarea {
             width: 100%;
-            min-height: 100px;
-            padding: 0.8rem;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 1rem;
-            margin-bottom: 1rem;
-            resize: vertical;
-        }
-        
-        button {
-            background-color: var(--secondary);
-            color: white;
+            min-height: 200px;
+            padding: 1.5rem;
             border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.3s;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            resize: vertical;
+            background: rgba(255, 255, 255, 0.8);
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
         
-        button:hover {
-            background-color: var(--primary);
+        textarea:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
         }
         
-        .result {
-            margin-top: 1.5rem;
-            padding: 1rem;
-            background-color: #f0f0f0;
-            border-radius: 4px;
-            min-height: 50px;
-            word-wrap: break-word;
-        }
-        
-        .copy-btn {
-            background-color: var(--highlight);
-            color: #333;
-            margin-left: 0.5rem;
-        }
-        
-        .options {
-            margin: 1rem 0;
-        }
-        
-        .option-row {
-            margin-bottom: 0.5rem;
+        .controls {
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .control-group {
+            flex: 1;
+            min-width: 250px;
         }
         
         label {
-            margin-right: 1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
         }
         
-        select {
-            padding: 0.5rem;
-            border-radius: 4px;
-            border: 1px solid #ddd;
+        select, input {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            background: white;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+        
+        button {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .primary-btn {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(106, 17, 203, 0.4);
+        }
+        
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(106, 17, 203, 0.5);
+        }
+        
+        .secondary-btn {
+            background: white;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .secondary-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .result-container {
+            margin-top: 3rem;
+            position: relative;
+        }
+        
+        .result {
+            padding: 2rem;
+            background: white;
+            border-radius: 12px;
+            min-height: 100px;
+            word-wrap: break-word;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .result::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+        
+        .copy-notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--accent);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 100;
+        }
+        
+        .copy-notification.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            filter: blur(40px);
+        }
+        
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--accent);
+            top: -100px;
+            right: -100px;
+        }
+        
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--secondary);
+            bottom: -150px;
+            left: -100px;
+        }
+        
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            background: var(--primary);
+            top: 50%;
+            right: 20%;
         }
         
         footer {
             text-align: center;
-            padding: 1rem;
-            color: #666;
-            font-size: 0.9rem;
+            margin-top: 3rem;
+            color: rgba(255, 255, 255, 0.7);
         }
         
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             h1 {
-                font-size: 1.8rem;
+                font-size: 2.5rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .main-card {
+                padding: 2rem 1.5rem;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Unicode Letter Lookalike Generator</h1>
-        <p>Transform text using similar-looking Unicode characters</p>
-    </header>
-    
-    <div class="container">
-        <div class="card">
-            <h2>Input Text</h2>
-            <textarea id="inputText" placeholder="Enter text to convert..."></textarea>
-            
-            <div class="options">
-                <div class="option-row">
-                    <label for="styleSelect">Replacement Style:</label>
-                    <select id="styleSelect">
-                        <option value="random">Random lookalike</option>
-                        <option value="greek">Greek letters</option>
-                        <option value="cyrillic">Cyrillic letters</option>
-                        <option value="bold">Mathematical Bold</option>
-                        <option value="fullwidth">Full-width characters</option>
-                    </select>
-                </div>
-            </div>
-            
-            <button id="convertBtn">Convert Text</button>
-            <button id="copyBtn" class="copy-btn">Copy Result</button>
-            
-            <h2>Result</h2>
-            <div id="result" class="result"></div>
-        </div>
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
     </div>
     
-    <footer>
-        <p>Note: Some characters may not display correctly in all fonts or applications.</p>
-    </footer>
+    <div class="container">
+        <header>
+            <h1>Ultra Luxe Unicode Styler</h1>
+            <p class="subtitle">Transform ordinary text into extraordinary visual masterpieces with our premium Unicode character conversions</p>
+        </header>
+        
+        <main>
+            <div class="main-card">
+                <h2 class="section-title">Your Text</h2>
+                <textarea id="inputText" placeholder="Enter your text here to transform it into something magnificent..."></textarea>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="styleSelect">Transformation Style</label>
+                        <select id="styleSelect">
+                            <option value="random">✨ Random Luxe Selection</option>
+                            <option value="greek">🏛️ Classical Greek</option>
+                            <option value="cyrillic">❄️ Elegant Cyrillic</option>
+                            <option value="bold">🔠 Mathematical Bold</option>
+                            <option value="fullwidth">🀀 Full-width Characters</option>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label for="intensity">Styling Intensity</label>
+                        <input type="range" id="intensity" min="0" max="100" value="100">
+                    </div>
+                </div>
+                
+                <div class="button-group">
+                    <button id="convertBtn" class="primary-btn">
+                        <span>🌟 Transform Text</span>
+                    </button>
+                    <button id="copyBtn" class="secondary-btn">
+                        <span>📋 Copy Masterpiece</span>
+                    </button>
+                </div>
+                
+                <div class="result-container">
+                    <h2 class="section-title">Your Masterpiece</h2>
+                    <div id="result" class="result"></div>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>© 2023 Ultra Luxe Unicode Styler | All characters may not display correctly in all applications</p>
+        </footer>
+    </div>
+    
+    <div id="copyNotification" class="copy-notification">
+        Masterpiece copied to clipboard!
+    </div>
     
     <script>
-        // Lookalike character mappings
+        // Enhanced lookalike character mappings
         const lookalikes = {
-            // Format: [random, greek, cyrillic, bold, fullwidth]
-            'A': ['Α', 'Α', 'А', '𝐀', 'Ａ'],
-            'B': ['Β', 'Β', 'В', '𝐁', 'Ｂ'],
-            'C': ['Ϲ', 'Ϲ', 'С', '𝐂', 'Ｃ'],
-            'D': ['ⅅ', 'Δ', 'Ꭰ', '𝐃', 'Ｄ'],
-            'E': ['Ε', 'Ε', 'Е', '𝐄', 'Ｅ'],
-            'F': ['Ϝ', 'Ϝ', 'Ꞙ', '𝐅', 'Ｆ'],
-            'G': ['ɢ', 'Γ', 'ꓖ', '𝐆', 'Ｇ'],
-            'H': ['Η', 'Η', 'Н', '𝐇', 'Ｈ'],
-            'I': ['Ι', 'Ι', 'І', '𝐈', 'Ｉ'],
-            'J': ['Ϳ', 'Ϳ', 'Ј', '𝐉', 'Ｊ'],
-            'K': ['Κ', 'Κ', 'К', '𝐊', 'Ｋ'],
-            'L': ['Ꮮ', 'Λ', 'Ꮮ', '𝐋', 'Ｌ'],
-            'M': ['Μ', 'Μ', 'М', '𝐌', 'Ｍ'],
-            'N': ['Ν', 'Ν', 'Ν', '𝐍', 'Ｎ'],
-            'O': ['Ο', 'Ο', 'О', '𝐎', 'Ｏ'],
-            'P': ['Ρ', 'Ρ', 'Р', '𝐏', 'Ｐ'],
-            'Q': ['ⵕ', 'Ϙ', 'Ԛ', '𝐐', 'Ｑ'],
-            'R': ['Ꮢ', 'Ρ', 'Я', '𝐑', 'Ｒ'],
-            'S': ['Ѕ', 'Ϲ', 'Ѕ', '𝐒', 'Ｓ'],
-            'T': ['Τ', 'Τ', 'Т', '𝐓', 'Ｔ'],
-            'U': ['Ս', 'Υ', 'Ս', '𝐔', 'Ｕ'],
-            'V': ['Ѵ', 'ϒ', 'Ѵ', '𝐕', 'Ｖ'],
-            'W': ['Ԝ', 'Ω', 'Ԝ', '𝐖', 'Ｗ'],
-            'X': ['Χ', 'Χ', 'Х', '𝐗', 'Ｘ'],
-            'Y': ['Υ', 'Υ', 'У', '𝐘', 'Ｙ'],
-            'Z': ['Ζ', 'Ζ', 'Ζ', '𝐙', 'Ｚ'],
-            'a': ['α', 'α', 'а', '𝐚', 'ａ'],
-            'b': ['Ƅ', 'β', 'ь', '𝐛', 'ｂ'],
-            'c': ['ϲ', 'ϲ', 'с', '𝐜', 'ｃ'],
-            'd': ['ժ', 'δ', 'ԁ', '𝐝', 'ｄ'],
-            'e': ['е', 'ε', 'е', '𝐞', 'ｅ'],
-            'f': ['ғ', 'φ', 'ғ', '𝐟', 'ｆ'],
-            'g': ['ɡ', 'γ', 'ɡ', '𝐠', 'ｇ'],
-            'h': ['һ', 'η', 'һ', '𝐡', 'ｈ'],
-            'i': ['і', 'ι', 'і', '𝐢', 'ｉ'],
-            'j': ['ϳ', 'ϳ', 'ј', '𝐣', 'ｊ'],
-            'k': ['κ', 'κ', 'к', '𝐤', 'ｋ'],
-            'l': ['Ӏ', 'λ', 'ӏ', '𝐥', 'ｌ'],
-            'm': ['ⅿ', 'μ', 'ⅿ', '𝐦', 'ｍ'],
-            'n': ['ո', 'ν', 'ո', '𝐧', 'ｎ'],
-            'o': ['ο', 'ο', 'о', '𝐨', 'ｏ'],
-            'p': ['р', 'ρ', 'р', '𝐩', 'ｐ'],
-            'q': ['զ', 'ϙ', 'ԛ', '𝐪', 'ｑ'],
-            'r': ['г', 'ρ', 'г', '𝐫', 'ｒ'],
-            's': ['ѕ', 'ς', 'ѕ', '𝐬', 'ｓ'],
-            't': ['т', 'τ', 'т', '𝐭', 'ｔ'],
-            'u': ['ս', 'υ', 'ս', '𝐮', 'ｕ'],
-            'v': ['ѵ', 'ν', 'ѵ', '𝐯', 'ｖ'],
-            'w': ['ԝ', 'ω', 'ԝ', '𝐰', 'ｗ'],
-            'x': ['х', 'χ', 'х', '𝐱', 'ｘ'],
-            'y': ['у', 'υ', 'у', '𝐲', 'ｙ'],
-            'z': ['ᴢ', 'ζ', 'ᴢ', '𝐳', 'ｚ']
+            'A': ['Α', 'Α', 'А', '𝐀', 'Ａ', 'ꓮ', 'Ꭺ', 'ᗅ', 'Ａ', '🄰', '🅐'],
+            'B': ['Β', 'Β', 'В', '𝐁', 'Ｂ', 'ꓐ', 'Ᏼ', 'ᗷ', '🄱', '🅑', '♭'],
+            'C': ['Ϲ', 'Ϲ', 'С', '𝐂', 'Ｃ', 'ꓚ', 'Ꮯ', 'ᑕ', '🄲', '🅒', '☾'],
+            'D': ['ⅅ', 'Δ', 'Ꭰ', '𝐃', 'Ｄ', 'ꓓ', 'Ꭰ', 'ᗪ', '🄳', '🅓', '◗'],
+            'E': ['Ε', 'Ε', 'Е', '𝐄', 'Ｅ', 'ꓰ', 'Ꭼ', 'ᗴ', '🄴', '🅔', '€'],
+            'F': ['Ϝ', 'Ϝ', 'Ꞙ', '𝐅', 'Ｆ', 'ꓝ', 'ᖴ', 'ᖴ', '🄵', '🅕', 'Ⅎ'],
+            'G': ['ɢ', 'Γ', 'ꓖ', '𝐆', 'Ｇ', 'ꓖ', 'Ꮐ', 'Ᏻ', '🄶', '🅖', '⅁'],
+            'H': ['Η', 'Η', 'Н', '𝐇', 'Ｈ', 'ꓧ', 'Ꮋ', 'ᕼ', '🄷', '🅗', '♄'],
+            'I': ['Ι', 'Ι', 'І', '𝐈', 'Ｉ', 'ꓲ', 'Ꭵ', 'Ꭵ', '🄸', '🅘', 'ǀ'],
+            'J': ['Ϳ', 'Ϳ', 'Ј', '𝐉', 'Ｊ', 'ꓙ', 'Ꭻ', 'ᒍ', '🄹', '🅙', 'Ɉ'],
+            'K': ['Κ', 'Κ', 'К', '𝐊', 'Ｋ', 'ꓗ', 'Ꮶ', 'Ꮶ', '🄺', '🅚', '⋊'],
+            'L': ['Ꮮ', 'Λ', 'Ꮮ', '𝐋', 'Ｌ', 'ꓡ', 'Ꮮ', 'ᒪ', '🄻', '🅛', '⅂'],
+            'M': ['Μ', 'Μ', 'М', '𝐌', 'Ｍ', 'ꓟ', 'Ꮇ', 'ᗰ', '🄼', '🅜', '♔'],
+            'N': ['Ν', 'Ν', 'Ν', '𝐍', 'Ｎ', 'ꓠ', 'Ꮑ', 'ᑎ', '🄽', '🅝', '♫'],
+            'O': ['Ο', 'Ο', 'О', '𝐎', 'Ｏ', 'ꓳ', 'Ꮎ', 'ᗝ', '🄾', '🅞', '⊙'],
+            'P': ['Ρ', 'Ρ', 'Р', '𝐏', 'Ｐ', 'ꓑ', 'Ꮲ', 'ᑭ', '🄿', '🅟', '℗'],
+            'Q': ['ⵕ', 'Ϙ', 'Ԛ', '𝐐', 'Ｑ', 'ꓤ', 'Ꮔ', 'ᑫ', '🅀', '🅠', '☯'],
+            'R': ['Ꮢ', 'Ρ', 'Я', '𝐑', 'Ｒ', 'ꓣ', 'Ꮢ', 'ᖇ', '🅁', '🅡', '☈'],
+            'S': ['Ѕ', 'Ϲ', 'Ѕ', '𝐒', 'Ｓ', 'ꓢ', 'Ꮥ', 'ᔕ', '🅂', '🅢', 'ⓢ'],
+            'T': ['Τ', 'Τ', 'Т', '𝐓', 'Ｔ', 'ꓔ', 'Ꭲ', 'Ꭲ', '🅃', '🅣', '✙'],
+            'U': ['Ս', 'Υ', 'Ս', '𝐔', 'Ｕ', 'ꓴ', 'Ꮼ', 'ᑌ', '🅄', '🅤', '⋓'],
+            'V': ['Ѵ', 'ϒ', 'Ѵ', '𝐕', 'Ｖ', 'ꓦ', 'Ꮙ', 'ᐯ', '🅅', '🅥', '✓'],
+            'W': ['Ԝ', 'Ω', 'Ԝ', '𝐖', 'Ｗ', 'ꓪ', 'Ꮗ', 'ᗯ', '🅆', '🅦', '⚄'],
+            'X': ['Χ', 'Χ', 'Х', '𝐗', 'Ｘ', 'ꓫ', '᙭', '᙭', '🅇', '🅧', '⚔'],
+            'Y': ['Υ', 'Υ', 'У', '𝐘', 'Ｙ', 'ꓬ', 'Ꭹ', 'Ꭹ', '🅈', '🅨', '⚧'],
+            'Z': ['Ζ', 'Ζ', 'Ζ', '𝐙', 'Ｚ', 'ꓜ', 'Ꮓ', 'ᘔ', '🅉', '🅩', '☡'],
+            'a': ['α', 'α', 'а', '𝐚', 'ａ', '⍺', 'ᴀ', 'ᗩ', '🄰', '🅐', '₳'],
+            'b': ['Ƅ', 'β', 'ь', '𝐛', 'ｂ', '♭', 'ʙ', 'ᗷ', '🄱', '🅑', '฿'],
+            'c': ['ϲ', 'ϲ', 'с', '𝐜', 'ｃ', '↻', 'ᴄ', 'ᑕ', '🄲', '🅒', '©'],
+            'd': ['ժ', 'δ', 'ԁ', '𝐝', 'ｄ', 'ↁ', 'ᴅ', 'ᗪ', '🄳', '🅓', '◗'],
+            'e': ['е', 'ε', 'е', '𝐞', 'ｅ', '€', 'ᴇ', 'ᗴ', '🄴', '🅔', '∃'],
+            'f': ['ғ', 'φ', 'ғ', '𝐟', 'ｆ', 'ϝ', 'ꜰ', 'ᖴ', '🄵', '🅕', 'ƒ'],
+            'g': ['ɡ', 'γ', 'ɡ', '𝐠', 'ｇ', '❡', 'ɢ', 'Ǥ', '🄶', '🅖', 'ⓖ'],
+            'h': ['һ', 'η', 'һ', '𝐡', 'ｈ', '♄', 'ʜ', 'ᕼ', '🄷', '🅗', 'ℎ'],
+            'i': ['і', 'ι', 'і', '𝐢', 'ｉ', 'ǀ', 'ɪ', 'Ꭵ', '🄸', '🅘', 'ⁱ'],
+            'j': ['ϳ', 'ϳ', 'ј', '𝐣', 'ｊ', 'Ϳ', 'ᴊ', 'ᒍ', '🄹', '🅙', 'ⓙ'],
+            'k': ['κ', 'κ', 'к', '𝐤', 'ｋ', '⋊', 'ᴋ', 'Ꮶ', '🄺', '🅚', '₭'],
+            'l': ['Ӏ', 'λ', 'ӏ', '𝐥', 'ｌ', '⅂', 'ʟ', 'ᒪ', '🄻', '🅛', 'ℓ'],
+            'm': ['ⅿ', 'μ', 'ⅿ', '𝐦', 'ｍ', '♔', 'ᴍ', 'ᗰ', '🄼', '🅜', '♏'],
+            'n': ['ո', 'ν', 'ո', '𝐧', 'ｎ', '♫', 'ɴ', 'ᑎ', '🄽', '🅝', '∩'],
+            'o': ['ο', 'ο', 'о', '𝐨', 'ｏ', '⊙', 'ᴏ', 'ᗝ', '🄾', '🅞', 'ⓞ'],
+            'p': ['р', 'ρ', 'р', '𝐩', 'ｐ', '℗', 'ᴘ', 'ᑭ', '🄿', '🅟', '₱'],
+            'q': ['զ', 'ϙ', 'ԛ', '𝐪', 'ｑ', '☯', 'ǫ', 'ᑫ', '🅀', '🅠', 'ⓠ'],
+            'r': ['г', 'ρ', 'г', '𝐫', 'ｒ', '☈', 'ʀ', 'ᖇ', '🅁', '🅡', '®'],
+            's': ['ѕ', 'ς', 'ѕ', '𝐬', 'ｓ', 'ⓢ', 'ꜱ', 'ᔕ', '🅂', '🅢', '§'],
+            't': ['т', 'τ', 'т', '𝐭', 'ｔ', '✙', 'ᴛ', 'Ꭲ', '🅃', '🅣', '†'],
+            'u': ['ս', 'υ', 'ս', '𝐮', 'ｕ', '⋓', 'ᴜ', 'ᑌ', '🅄', '🅤', '∪'],
+            'v': ['ѵ', 'ν', 'ѵ', '𝐯', 'ｖ', '✓', 'ᴠ', 'ᐯ', '🅅', '🅥', '∨'],
+            'w': ['ԝ', 'ω', 'ԝ', '𝐰', 'ｗ', '⚄', 'ᴡ', 'ᗯ', '🅆', '🅦', 'ω'],
+            'x': ['х', 'χ', 'х', '𝐱', 'ｘ', '⚔', 'ˣ', '᙭', '🅇', '🅧', '×'],
+            'y': ['у', 'υ', 'у', '𝐲', 'ｙ', '⚧', 'ʏ', 'Ꭹ', '🅈', '🅨', '¥'],
+            'z': ['ᴢ', 'ζ', 'ᴢ', '𝐳', 'ｚ', '☡', 'ᴢ', 'ᘔ', '🅉', '🅩', 'ℨ']
         };
         
         // DOM elements
         const inputText = document.getElementById('inputText');
         const styleSelect = document.getElementById('styleSelect');
+        const intensitySlider = document.getElementById('intensity');
         const convertBtn = document.getElementById('convertBtn');
         const copyBtn = document.getElementById('copyBtn');
         const resultDiv = document.getElementById('result');
+        const copyNotification = document.getElementById('copyNotification');
         
-        // Convert text based on selected style
+        // Convert text based on selected style and intensity
         function convertText() {
             const text = inputText.value;
             const style = styleSelect.value;
+            const intensity = intensitySlider.value / 100; // Convert to 0-1 range
+            
             let output = '';
             
             // Determine which column to use from lookalikes
-            let styleIndex = 0;
+            let styleIndex;
             switch(style) {
                 case 'random': styleIndex = 0; break;
                 case 'greek': styleIndex = 1; break;
                 case 'cyrillic': styleIndex = 2; break;
                 case 'bold': styleIndex = 3; break;
                 case 'fullwidth': styleIndex = 4; break;
+                default: styleIndex = 0;
             }
             
             // Process each character
             for (let i = 0; i < text.length; i++) {
                 const char = text[i];
-                if (lookalikes[char]) {
-                    // Use the selected style's character
-                    output += lookalikes[char][styleIndex];
-                } else if (lookalikes[char.toUpperCase()]) {
-                    // Try uppercase version
-                    const upperChar = char.toUpperCase();
-                    if (styleIndex === 3 || styleIndex === 4) {
-                        // For bold and fullwidth, we might have lowercase versions
-                        if (lookalikes[char]) {
-                            output += lookalikes[char][styleIndex];
+                
+                // Check if we should transform this character based on intensity
+                if (Math.random() <= intensity) {
+                    if (lookalikes[char]) {
+                        // For random style, pick any of the available options
+                        if (style === 'random') {
+                            const options = lookalikes[char].slice(0); // Copy array
+                            output += options[Math.floor(Math.random() * options.length)];
                         } else {
-                            output += char; // No replacement found
+                            output += lookalikes[char][styleIndex];
+                        }
+                    } else if (lookalikes[char.toLowerCase()]) {
+                        // Try lowercase version
+                        const lowerChar = char.toLowerCase();
+                        if (style === 'bold' || style === 'fullwidth') {
+                            // For bold and fullwidth, we might have lowercase versions
+                            if (lookalikes[char]) {
+                                output += lookalikes[char][styleIndex];
+                            } else {
+                                output += char; // No replacement found
+                            }
+                        } else {
+                            const replacement = lookalikes[lowerChar][styleIndex];
+                            output += replacement ? replacement : char;
                         }
                     } else {
-                        output += lookalikes[upperChar][styleIndex].toLowerCase();
+                        // No replacement found, keep original
+                        output += char;
                     }
                 } else {
-                    // No replacement found, keep original
+                    // Skip transformation based on intensity
                     output += char;
                 }
             }
@@ -276,12 +516,16 @@
             if (!result) return;
             
             navigator.clipboard.writeText(result).then(() => {
-                const originalText = copyBtn.textContent;
-                copyBtn.textContent = 'Copied!';
-                setTimeout(() => {
-                    copyBtn.textContent = originalText;
-                }, 2000);
+                showNotification();
             });
+        }
+        
+        // Show copy notification
+        function showNotification() {
+            copyNotification.classList.add('show');
+            setTimeout(() => {
+                copyNotification.classList.remove('show');
+            }, 3000);
         }
         
         // Event listeners
@@ -289,7 +533,7 @@
         copyBtn.addEventListener('click', copyResult);
         
         // Initialize with sample text
-        inputText.value = "Hello World! This is a Unicode lookalike generator.";
+        inputText.value = "Create something beautiful...";
         convertText();
     </script>
 </body>
