@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicode Letter Lookalike Generator</title>
+    <style>
+        :root {
+            --primary: #4a6fa5;
+            --secondary: #166088;
+            --background: #f8f9fa;
+            --text: #333;
+            --card-bg: #fff;
+            --highlight: #ffd166;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--background);
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.2rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            resize: vertical;
+        }
+        
+        button {
+            background-color: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--primary);
+        }
+        
+        .result {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            min-height: 50px;
+            word-wrap: break-word;
+        }
+        
+        .copy-btn {
+            background-color: var(--highlight);
+            color: #333;
+            margin-left: 0.5rem;
+        }
+        
+        .options {
+            margin: 1rem 0;
+        }
+        
+        .option-row {
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        label {
+            margin-right: 1rem;
+        }
+        
+        select {
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Unicode Letter Lookalike Generator</h1>
+        <p>Transform text using similar-looking Unicode characters</p>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <h2>Input Text</h2>
+            <textarea id="inputText" placeholder="Enter text to convert..."></textarea>
+            
+            <div class="options">
+                <div class="option-row">
+                    <label for="styleSelect">Replacement Style:</label>
+                    <select id="styleSelect">
+                        <option value="random">Random lookalike</option>
+                        <option value="greek">Greek letters</option>
+                        <option value="cyrillic">Cyrillic letters</option>
+                        <option value="bold">Mathematical Bold</option>
+                        <option value="fullwidth">Full-width characters</option>
+                    </select>
+                </div>
+            </div>
+            
+            <button id="convertBtn">Convert Text</button>
+            <button id="copyBtn" class="copy-btn">Copy Result</button>
+            
+            <h2>Result</h2>
+            <div id="result" class="result"></div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Note: Some characters may not display correctly in all fonts or applications.</p>
+    </footer>
+    
+    <script>
+        // Lookalike character mappings
+        const lookalikes = {
+            // Format: [random, greek, cyrillic, bold, fullwidth]
+            'A': ['Α', 'Α', 'А', '𝐀', 'Ａ'],
+            'B': ['Β', 'Β', 'В', '𝐁', 'Ｂ'],
+            'C': ['Ϲ', 'Ϲ', 'С', '𝐂', 'Ｃ'],
+            'D': ['ⅅ', 'Δ', 'Ꭰ', '𝐃', 'Ｄ'],
+            'E': ['Ε', 'Ε', 'Е', '𝐄', 'Ｅ'],
+            'F': ['Ϝ', 'Ϝ', 'Ꞙ', '𝐅', 'Ｆ'],
+            'G': ['ɢ', 'Γ', 'ꓖ', '𝐆', 'Ｇ'],
+            'H': ['Η', 'Η', 'Н', '𝐇', 'Ｈ'],
+            'I': ['Ι', 'Ι', 'І', '𝐈', 'Ｉ'],
+            'J': ['Ϳ', 'Ϳ', 'Ј', '𝐉', 'Ｊ'],
+            'K': ['Κ', 'Κ', 'К', '𝐊', 'Ｋ'],
+            'L': ['Ꮮ', 'Λ', 'Ꮮ', '𝐋', 'Ｌ'],
+            'M': ['Μ', 'Μ', 'М', '𝐌', 'Ｍ'],
+            'N': ['Ν', 'Ν', 'Ν', '𝐍', 'Ｎ'],
+            'O': ['Ο', 'Ο', 'О', '𝐎', 'Ｏ'],
+            'P': ['Ρ', 'Ρ', 'Р', '𝐏', 'Ｐ'],
+            'Q': ['ⵕ', 'Ϙ', 'Ԛ', '𝐐', 'Ｑ'],
+            'R': ['Ꮢ', 'Ρ', 'Я', '𝐑', 'Ｒ'],
+            'S': ['Ѕ', 'Ϲ', 'Ѕ', '𝐒', 'Ｓ'],
+            'T': ['Τ', 'Τ', 'Т', '𝐓', 'Ｔ'],
+            'U': ['Ս', 'Υ', 'Ս', '𝐔', 'Ｕ'],
+            'V': ['Ѵ', 'ϒ', 'Ѵ', '𝐕', 'Ｖ'],
+            'W': ['Ԝ', 'Ω', 'Ԝ', '𝐖', 'Ｗ'],
+            'X': ['Χ', 'Χ', 'Х', '𝐗', 'Ｘ'],
+            'Y': ['Υ', 'Υ', 'У', '𝐘', 'Ｙ'],
+            'Z': ['Ζ', 'Ζ', 'Ζ', '𝐙', 'Ｚ'],
+            'a': ['α', 'α', 'а', '𝐚', 'ａ'],
+            'b': ['Ƅ', 'β', 'ь', '𝐛', 'ｂ'],
+            'c': ['ϲ', 'ϲ', 'с', '𝐜', 'ｃ'],
+            'd': ['ժ', 'δ', 'ԁ', '𝐝', 'ｄ'],
+            'e': ['е', 'ε', 'е', '𝐞', 'ｅ'],
+            'f': ['ғ', 'φ', 'ғ', '𝐟', 'ｆ'],
+            'g': ['ɡ', 'γ', 'ɡ', '𝐠', 'ｇ'],
+            'h': ['һ', 'η', 'һ', '𝐡', 'ｈ'],
+            'i': ['і', 'ι', 'і', '𝐢', 'ｉ'],
+            'j': ['ϳ', 'ϳ', 'ј', '𝐣', 'ｊ'],
+            'k': ['κ', 'κ', 'к', '𝐤', 'ｋ'],
+            'l': ['Ӏ', 'λ', 'ӏ', '𝐥', 'ｌ'],
+            'm': ['ⅿ', 'μ', 'ⅿ', '𝐦', 'ｍ'],
+            'n': ['ո', 'ν', 'ո', '𝐧', 'ｎ'],
+            'o': ['ο', 'ο', 'о', '𝐨', 'ｏ'],
+            'p': ['р', 'ρ', 'р', '𝐩', 'ｐ'],
+            'q': ['զ', 'ϙ', 'ԛ', '𝐪', 'ｑ'],
+            'r': ['г', 'ρ', 'г', '𝐫', 'ｒ'],
+            's': ['ѕ', 'ς', 'ѕ', '𝐬', 'ｓ'],
+            't': ['т', 'τ', 'т', '𝐭', 'ｔ'],
+            'u': ['ս', 'υ', 'ս', '𝐮', 'ｕ'],
+            'v': ['ѵ', 'ν', 'ѵ', '𝐯', 'ｖ'],
+            'w': ['ԝ', 'ω', 'ԝ', '𝐰', 'ｗ'],
+            'x': ['х', 'χ', 'х', '𝐱', 'ｘ'],
+            'y': ['у', 'υ', 'у', '𝐲', 'ｙ'],
+            'z': ['ᴢ', 'ζ', 'ᴢ', '𝐳', 'ｚ']
+        };
+        
+        // DOM elements
+        const inputText = document.getElementById('inputText');
+        const styleSelect = document.getElementById('styleSelect');
+        const convertBtn = document.getElementById('convertBtn');
+        const copyBtn = document.getElementById('copyBtn');
+        const resultDiv = document.getElementById('result');
+        
+        // Convert text based on selected style
+        function convertText() {
+            const text = inputText.value;
+            const style = styleSelect.value;
+            let output = '';
+            
+            // Determine which column to use from lookalikes
+            let styleIndex = 0;
+            switch(style) {
+                case 'random': styleIndex = 0; break;
+                case 'greek': styleIndex = 1; break;
+                case 'cyrillic': styleIndex = 2; break;
+                case 'bold': styleIndex = 3; break;
+                case 'fullwidth': styleIndex = 4; break;
+            }
+            
+            // Process each character
+            for (let i = 0; i < text.length; i++) {
+                const char = text[i];
+                if (lookalikes[char]) {
+                    // Use the selected style's character
+                    output += lookalikes[char][styleIndex];
+                } else if (lookalikes[char.toUpperCase()]) {
+                    // Try uppercase version
+                    const upperChar = char.toUpperCase();
+                    if (styleIndex === 3 || styleIndex === 4) {
+                        // For bold and fullwidth, we might have lowercase versions
+                        if (lookalikes[char]) {
+                            output += lookalikes[char][styleIndex];
+                        } else {
+                            output += char; // No replacement found
+                        }
+                    } else {
+                        output += lookalikes[upperChar][styleIndex].toLowerCase();
+                    }
+                } else {
+                    // No replacement found, keep original
+                    output += char;
+                }
+            }
+            
+            resultDiv.textContent = output;
+        }
+        
+        // Copy result to clipboard
+        function copyResult() {
+            const result = resultDiv.textContent;
+            if (!result) return;
+            
+            navigator.clipboard.writeText(result).then(() => {
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = 'Copied!';
+                setTimeout(() => {
+                    copyBtn.textContent = originalText;
+                }, 2000);
+            });
+        }
+        
+        // Event listeners
+        convertBtn.addEventListener('click', convertText);
+        copyBtn.addEventListener('click', copyResult);
+        
+        // Initialize with sample text
+        inputText.value = "Hello World! This is a Unicode lookalike generator.";
+        convertText();
+    </script>
+</body>
+</html>
